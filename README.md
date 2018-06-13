@@ -1,0 +1,3 @@
+# rabbitmq
+
+Go RabbitMQ Wrapper
