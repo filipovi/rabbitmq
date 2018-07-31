@@ -5,7 +5,7 @@ import (
 	"os"
 )
 
-// Config contains the information for ElasticSearch
+// Config contains the information for Rabbitmq
 type Config struct {
 	Rabbitmq struct {
 		URL string `json:"url"`
