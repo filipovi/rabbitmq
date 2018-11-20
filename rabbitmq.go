@@ -68,13 +68,9 @@ func (ch Channel) Send(body []byte, name string) error {
 		})
 }
 
-// New returns a RabbitMQ Connection
-func New(path string) (*Channel, error) {
-	cfg, err := config.New(path)
-	if err != nil {
-		return nil, err
-	}
-	conn, err := amqp.Dial(cfg.Rabbitmq.URL)
+// Connect returns a RabbitMQ Channel using the RMQ URL
+func Connect(url string) (*Channel, error) {
+	conn, err := amqp.Dial(url)
 	if err != nil {
 		return nil, err
 	}
@@ -84,4 +80,17 @@ func New(path string) (*Channel, error) {
 	}
 
 	return &Channel{ch}, nil
+}
+
+// New returns a RabbitMQ Connection using a config file
+func New(path string) (*Channel, error) {
+	cfg, err := config.New(path)
+	if err != nil {
+		return nil, err
+	}
+	conn, err := Connect(cfg.Rabbitmq.URL)
+	if err != nil {
+		return nil, err
+	}
+	return conn, nil
 }
